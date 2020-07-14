@@ -7,7 +7,7 @@
 
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- medium style editor - there is a medium editor git hib which provides styles  -->
     <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
@@ -18,18 +18,19 @@
 
     <!-- google fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Merienda&family=Neucha&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
   </head>
 
   <body>
     <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light custom-nav">
+    <nav class="navbar fixed-top navbar-expand-lg custom-nav">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <a class="navbar-brand" href="{% url 'post_list' %}">My Blog</a>
         <ul class="navbar-nav mr-auto">
-          <li class="navbar-brand bigbrand"><a class="nav-link" href="{% url 'post_list' %}">My Blog</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+          <!-- <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li> -->
           <li class="nav-item"><a class="nav-link" href="https://github.com/sonikaPinto/django">GitHub</a></li>
           <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/sonika-muriel-pinto-031234125/">linkedIn</a></li>
         </ul>
@@ -37,8 +38,8 @@
           {% if user.is_authenticated %}
             <li class="nav-item"><a class="nav-link" href="{% url 'post_create' %}">New Post</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'post_draft' %}">Drafts</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
-            <li class="nav-item"><a>Welcome {{user.username}}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}?next=/">Logout</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'post_list' %}">Welcome {{user.username}}</a></li>
           {% else %}
             <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">
               <span>Login</span>
@@ -52,7 +53,7 @@
     <!-- content block -->
     <div class="content container" style='padding-top:50px;padding-left:100px;'>
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
           <div class="blog_post">
             {% block content %}
             {% endblock %}

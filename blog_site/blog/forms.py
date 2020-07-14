@@ -7,9 +7,11 @@ class PostForm(forms.ModelForm):
         fields = ('author','title','content')
 
     widgets = {
+        'author': forms.Select(attrs={'class':'author'}),
         'title' : forms.TextInput(attrs={'class':'post_title'}),
-        'content': forms.Textarea(attrs={'class': 'editable medium-editor-textarea post_content'})
+        'content': forms.Textarea(attrs={'placeholder':'write your story'}),
     }
+    
 
 
 class CommentForm(forms.ModelForm):

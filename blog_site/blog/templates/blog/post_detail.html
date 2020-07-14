@@ -8,38 +8,35 @@
       <h4>{{post.published_date|date:'D M Y'}}</h4>
     </div>
   {% else %}
-    <a class='btn btn-warning' href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+    <a class='btn btn-secondary' href="{% url 'post_publish' pk=post.pk %}">Publish</a>
   {% endif %}
 
   <p class="post_content">{{post.content|safe|linebreaksbr}}</p>
 
   {% if user.is_authenticated %}
-    <a class="btn btn-primary" href="{% url 'post_update' pk=post.pk %}" >
-      <span><i class="fa fa-class-name"></i></span>EDIT
-    </a>
-    <a class="btn btn-primary" href="{% url 'post_delete' pk=post.pk %}">
-      <span class="bi bi-x-square-fill"></span>REMOVE
-    </a>
+    <a class="btn btn-primary comment_approve_remove" href="{% url 'post_update' pk=post.pk %}" >EDIT</a>
+    <a class="btn btn-primary edit_remove" href="{% url 'post_delete' pk=post.pk %}">REMOVE</a>
   {% endif %}
 
   <hr class="line">
 
-  <a class="btn btn-primary btn-comment" href="{% url 'comment_create' pk=post.pk %}">Add comments</a>
+  <a class="btn btn-primary large" href="{% url 'comment_create' pk=post.pk %}">Add comments</a>
   <div class="container">
     {% for comment in post.comments.all %}
         <br>
         {% if user.is_authenticated or comment.approved_comment %}
-          {{comment.created_date}}
+          <p class="comment">Posted by : {{comment.name}} on {{comment.created_date}}</p>
+          <p class="comment_text">{{comment.text}}</p>
           {% if not comment.approved_comment %}
-            <a class="btn btn-primary" href="{% url 'comment_approve' pk=comment.pk %}" >
+            <a class="btn btn-primary comment_approve_remove" href="{% url 'comment_approve' pk=comment.pk %}" >
               <span><i class="fa fa-class-name"></i></span>Approve
             </a>
-            <a class="btn btn-primary" href="{% url 'comment_remove' pk=comment.pk %}" >
+            <a class="btn btn-primary edit_remove" href="{% url 'comment_remove' pk=comment.pk %}" >
               <span><i class="fa fa-class-name"></i></span>Remove
             </a>
           {% endif %}
-          <p>{{comment.text|safe|linebreaksbr}}</p>
-          <p>Posted by : {{comment.name}}</p>
+
+
           <hr>
         {% endif %}
     {% empty %}
